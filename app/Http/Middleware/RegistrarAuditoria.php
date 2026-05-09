@@ -1,5 +1,5 @@
 <?php
-
+// Interceptor 1: Middleware de Auditoría - Arely Zambrana
 namespace App\Http\Middleware;
 
 use Closure;
