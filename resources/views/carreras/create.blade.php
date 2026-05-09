@@ -1,35 +1,42 @@
-<!DOCTYPE html>
-<html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <title>Nueva Carrera</title>
-    <style>
-        body { font-family: Arial, sans-serif; margin: 30px; }
-        input { padding: 8px; width: 300px; margin-bottom: 10px; border: 1px solid #ccc; border-radius: 4px; }
-        .btn { padding: 8px 16px; border-radius: 4px; border: none; cursor: pointer; }
-        .btn-green { background: #28a745; color: white; }
-        .error { color: red; font-size: 13px; }
-    </style>
-</head>
-<body>
-    <h1>Nueva Carrera</h1>
-    <a href="{{ route('carreras.index') }}">← Volver</a>
-    <br><br>
+@extends('layouts.app')
 
-    <form action="{{ route('carreras.store') }}" method="POST">
-        @csrf
+@section('title', 'Lista de Carreras')
 
-        <label>Nombre:</label><br>
-        <input type="text" name="nombre" value="{{ old('nombre') }}">
-        @error('nombre') <span class="error">{{ $message }}</span> @enderror
-        <br>
+@section('content')
+    <div class="d-flex justify-content-between align-items-center mb-3">
+        <h1>Lista de Carreras</h1>
+        <a href="{{ route('carreras.create') }}" class="btn btn-success">+ Nueva Carrera</a>
+    </div>
 
-        <label>Facultad:</label><br>
-        <input type="text" name="facultad" value="{{ old('facultad') }}">
-        @error('facultad') <span class="error">{{ $message }}</span> @enderror
-        <br>
+    @if(session('success'))
+        <div class="alert alert-success">{{ session('success') }}</div>
+    @endif
 
-        <button type="submit" class="btn btn-green">Guardar</button>
-    </form>
-</body>
-</html>
+    <table class="table table-bordered table-striped">
+        <thead class="table-dark">
+            <tr>
+                <th>ID</th>
+                <th>Nombre</th>
+                <th>Facultad</th>
+                <th>Acciones</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach($carreras as $carrera)
+            <tr>
+                <td>{{ $carrera->id }}</td>
+                <td>{{ $carrera->nombre }}</td>
+                <td>{{ $carrera->facultad }}</td>
+                <td>
+                    <a href="{{ route('carreras.edit', $carrera) }}" class="btn btn-sm btn-warning">Editar</a>
+                    <form action="{{ route('carreras.destroy', $carrera) }}" method="POST" style="display:inline">
+                        @csrf
+                        @method('DELETE')
+                        <button class="btn btn-sm btn-danger" onclick="return confirm('¿Eliminar?')">Eliminar</button>
+                    </form>
+                </td>
+            </tr>
+            @endforeach
+        </tbody>
+    </table>
+@endsection

@@ -1,53 +1,47 @@
-<!DOCTYPE html>
-<html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <title>Editar Estudiante</title>
-    <style>
-        body { font-family: Arial, sans-serif; margin: 30px; }
-        input, select { padding: 8px; width: 300px; margin-bottom: 10px; border: 1px solid #ccc; border-radius: 4px; }
-        .btn { padding: 8px 16px; border-radius: 4px; border: none; cursor: pointer; }
-        .btn-green { background: #28a745; color: white; }
-        .error { color: red; font-size: 13px; }
-    </style>
-</head>
-<body>
+@extends('layouts.app')
+
+@section('title', 'Editar Estudiante')
+
+@section('content')
     <h1>Editar Estudiante</h1>
-    <a href="{{ route('estudiantes.index') }}">← Volver</a>
-    <br><br>
+    <br>
+    <a href="{{ route('estudiantes.index') }}" class="btn btn-secondary mb-3">← Volver</a>
 
     <form action="{{ route('estudiantes.update', $estudiante) }}" method="POST">
         @csrf
         @method('PUT')
 
-        <label>Nombre:</label><br>
-        <input type="text" name="nombre" value="{{ old('nombre', $estudiante->nombre) }}">
-        @error('nombre') <span class="error">{{ $message }}</span> @enderror
-        <br>
+        <div class="mb-3">
+            <label class="form-label">Nombre:</label>
+            <input type="text" name="nombre" value="{{ old('nombre', $estudiante->nombre) }}" class="form-control" style="max-width:400px;">
+            @error('nombre') <span class="text-danger">{{ $message }}</span> @enderror
+        </div>
 
-        <label>Apellido:</label><br>
-        <input type="text" name="apellido" value="{{ old('apellido', $estudiante->apellido) }}">
-        @error('apellido') <span class="error">{{ $message }}</span> @enderror
-        <br>
+        <div class="mb-3">
+            <label class="form-label">Apellido:</label>
+            <input type="text" name="apellido" value="{{ old('apellido', $estudiante->apellido) }}" class="form-control" style="max-width:400px;">
+            @error('apellido') <span class="text-danger">{{ $message }}</span> @enderror
+        </div>
 
-        <label>Código:</label><br>
-        <input type="text" name="codigo" value="{{ old('codigo', $estudiante->codigo) }}">
-        @error('codigo') <span class="error">{{ $message }}</span> @enderror
-        <br>
+        <div class="mb-3">
+            <label class="form-label">Código:</label>
+            <input type="text" name="codigo" value="{{ old('codigo', $estudiante->codigo) }}" class="form-control" style="max-width:400px;">
+            @error('codigo') <span class="text-danger">{{ $message }}</span> @enderror
+        </div>
 
-        <label>Carrera:</label><br>
-        <select name="carrera_id">
-            <option value="">-- Selecciona una carrera --</option>
-            @foreach($carreras as $carrera)
-                <option value="{{ $carrera->id }}" {{ old('carrera_id', $estudiante->carrera_id) == $carrera->id ? 'selected' : '' }}>
-                    {{ $carrera->nombre }}
-                </option>
-            @endforeach
-        </select>
-        @error('carrera_id') <span class="error">{{ $message }}</span> @enderror
-        <br>
+        <div class="mb-3">
+            <label class="form-label">Carrera:</label>
+            <select name="carrera_id" class="form-select" style="max-width:400px;">
+                <option value="">-- Selecciona una carrera --</option>
+                @foreach($carreras as $carrera)
+                    <option value="{{ $carrera->id }}" {{ old('carrera_id', $estudiante->carrera_id) == $carrera->id ? 'selected' : '' }}>
+                        {{ $carrera->nombre }}
+                    </option>
+                @endforeach
+            </select>
+            @error('carrera_id') <span class="text-danger">{{ $message }}</span> @enderror
+        </div>
 
-        <button type="submit" class="btn btn-green">Actualizar</button>
+        <button type="submit" class="btn btn-success">Actualizar</button>
     </form>
-</body>
-</html>
+@endsection
