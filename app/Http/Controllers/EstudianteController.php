@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Estudiante;
 use App\Models\Carrera;
+use App\Models\Scopes\EstudianteActivoScope;
 use Illuminate\Http\Request;
 
 class EstudianteController extends Controller
@@ -11,7 +12,16 @@ class EstudianteController extends Controller
     // Muestra la lista de estudiantes con su carrera relacionada
     public function index()
     {
-        $estudiantes = Estudiante::with('carrera')->get();
+        // Caso especial: si el usuario es administrador, muestra TODOS los registros
+        // incluidos los inactivos, saltando el Global Scope explícitamente
+        if (auth()->check() && auth()->user()->role === 'admin') {
+            $estudiantes = Estudiante::withoutGlobalScope(EstudianteActivoScope::class)
+                                 ->with('carrera')
+                                 ->get();
+        } else {
+            // Usuario normal: el Global Scope filtra automáticamente activo = 1
+            $estudiantes = Estudiante::with('carrera')->get();
+    }
         return view('estudiantes.index', compact('estudiantes'));
     }
 
