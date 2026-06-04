@@ -9,19 +9,17 @@ use Illuminate\Http\Request;
 
 class EstudianteController extends Controller
 {
-    // Muestra la lista de estudiantes con su carrera relacionada
-    public function index()
+    // Muestra la lista de estudiantes con búsqueda y paginación
+    public function index(Request $request)
     {
-        // Caso especial: si el usuario es administrador, muestra TODOS los registros
-        // incluidos los inactivos, saltando el Global Scope explícitamente
-        if (auth()->check() && auth()->user()->role === 'admin') {
-            $estudiantes = Estudiante::withoutGlobalScope(EstudianteActivoScope::class)
-                                 ->with('carrera')
-                                 ->get();
-        } else {
-            // Usuario normal: el Global Scope filtra automáticamente activo = 1
-            $estudiantes = Estudiante::with('carrera')->get();
-    }
+        $estudiantes = Estudiante::with('carrera')
+            ->when($request->buscar, function ($query, $buscar) {
+                // Filtra por nombre o apellido usando LIKE
+             $query->where('nombre', 'like', "%{$buscar}%")
+                      ->orWhere('apellido', 'like', "%{$buscar}%");
+          })
+         ->paginate(5); // Muestra 5 por página
+
         return view('estudiantes.index', compact('estudiantes'));
     }
 

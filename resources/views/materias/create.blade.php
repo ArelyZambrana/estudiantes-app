@@ -1,15 +1,15 @@
 @extends('layouts.app')
 
-@section('title', 'Nuevo Estudiante')
+@section('title', 'Nueva Materia')
 
 @section('content')
     <div class="flex justify-between items-center mb-6">
-        <h1 class="text-2xl font-bold text-gray-800">Nuevo Estudiante</h1>
-        <a href="{{ route('estudiantes.index') }}" class="bg-gray-500 hover:bg-gray-600 text-white px-4 py-2 rounded">← Volver</a>
+        <h1 class="text-2xl font-bold text-gray-800">Nueva Materia</h1>
+        <a href="{{ route('materias.index') }}" class="bg-gray-500 hover:bg-gray-600 text-white px-4 py-2 rounded">← Volver</a>
     </div>
 
     <div class="bg-white rounded shadow p-6 max-w-lg">
-        <form action="{{ route('estudiantes.store') }}" method="POST">
+        <form action="{{ route('materias.store') }}" method="POST">
             @csrf
 
             <div class="mb-4">
@@ -19,15 +19,15 @@
             </div>
 
             <div class="mb-4">
-                <label class="block text-sm font-medium text-gray-700 mb-1">Apellido:</label>
-                <input type="text" name="apellido" value="{{ old('apellido') }}" class="w-full border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-400">
-                @error('apellido') <span class="text-red-500 text-xs">{{ $message }}</span> @enderror
+                <label class="block text-sm font-medium text-gray-700 mb-1">Créditos:</label>
+                <input type="number" name="creditos" value="{{ old('creditos') }}" class="w-full border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-400">
+                @error('creditos') <span class="text-red-500 text-xs">{{ $message }}</span> @enderror
             </div>
 
             <div class="mb-4">
-                <label class="block text-sm font-medium text-gray-700 mb-1">Código:</label>
-                <input type="text" name="codigo" value="{{ old('codigo') }}" class="w-full border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-400">
-                @error('codigo') <span class="text-red-500 text-xs">{{ $message }}</span> @enderror
+                <label class="block text-sm font-medium text-gray-700 mb-1">Semestre:</label>
+                <input type="text" name="semestre" value="{{ old('semestre') }}" placeholder="Ej: 1ro, 2do, 3ro..." class="w-full border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-400">
+                @error('semestre') <span class="text-red-500 text-xs">{{ $message }}</span> @enderror
             </div>
 
             <div class="mb-4">

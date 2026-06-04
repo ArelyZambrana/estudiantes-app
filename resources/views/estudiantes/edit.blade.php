@@ -3,45 +3,48 @@
 @section('title', 'Editar Estudiante')
 
 @section('content')
-    <h1>Editar Estudiante</h1>
-    <br>
-    <a href="{{ route('estudiantes.index') }}" class="btn btn-secondary mb-3">← Volver</a>
+    <div class="flex justify-between items-center mb-6">
+        <h1 class="text-2xl font-bold text-gray-800">Editar Estudiante</h1>
+        <a href="{{ route('estudiantes.index') }}" class="bg-gray-500 hover:bg-gray-600 text-white px-4 py-2 rounded">← Volver</a>
+    </div>
 
-    <form action="{{ route('estudiantes.update', $estudiante) }}" method="POST">
-        @csrf
-        @method('PUT')
+    <div class="bg-white rounded shadow p-6 max-w-lg">
+        <form action="{{ route('estudiantes.update', $estudiante) }}" method="POST">
+            @csrf
+            @method('PUT')
 
-        <div class="mb-3">
-            <label class="form-label">Nombre:</label>
-            <input type="text" name="nombre" value="{{ old('nombre', $estudiante->nombre) }}" class="form-control" style="max-width:400px;">
-            @error('nombre') <span class="text-danger">{{ $message }}</span> @enderror
-        </div>
+            <div class="mb-4">
+                <label class="block text-sm font-medium text-gray-700 mb-1">Nombre:</label>
+                <input type="text" name="nombre" value="{{ old('nombre', $estudiante->nombre) }}" class="w-full border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-400">
+                @error('nombre') <span class="text-red-500 text-xs">{{ $message }}</span> @enderror
+            </div>
 
-        <div class="mb-3">
-            <label class="form-label">Apellido:</label>
-            <input type="text" name="apellido" value="{{ old('apellido', $estudiante->apellido) }}" class="form-control" style="max-width:400px;">
-            @error('apellido') <span class="text-danger">{{ $message }}</span> @enderror
-        </div>
+            <div class="mb-4">
+                <label class="block text-sm font-medium text-gray-700 mb-1">Apellido:</label>
+                <input type="text" name="apellido" value="{{ old('apellido', $estudiante->apellido) }}" class="w-full border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-400">
+                @error('apellido') <span class="text-red-500 text-xs">{{ $message }}</span> @enderror
+            </div>
 
-        <div class="mb-3">
-            <label class="form-label">Código:</label>
-            <input type="text" name="codigo" value="{{ old('codigo', $estudiante->codigo) }}" class="form-control" style="max-width:400px;">
-            @error('codigo') <span class="text-danger">{{ $message }}</span> @enderror
-        </div>
+            <div class="mb-4">
+                <label class="block text-sm font-medium text-gray-700 mb-1">Código:</label>
+                <input type="text" name="codigo" value="{{ old('codigo', $estudiante->codigo) }}" class="w-full border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-400">
+                @error('codigo') <span class="text-red-500 text-xs">{{ $message }}</span> @enderror
+            </div>
 
-        <div class="mb-3">
-            <label class="form-label">Carrera:</label>
-            <select name="carrera_id" class="form-select" style="max-width:400px;">
-                <option value="">-- Selecciona una carrera --</option>
-                @foreach($carreras as $carrera)
-                    <option value="{{ $carrera->id }}" {{ old('carrera_id', $estudiante->carrera_id) == $carrera->id ? 'selected' : '' }}>
-                        {{ $carrera->nombre }}
-                    </option>
-                @endforeach
-            </select>
-            @error('carrera_id') <span class="text-danger">{{ $message }}</span> @enderror
-        </div>
+            <div class="mb-4">
+                <label class="block text-sm font-medium text-gray-700 mb-1">Carrera:</label>
+                <select name="carrera_id" class="w-full border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-400">
+                    <option value="">-- Selecciona una carrera --</option>
+                    @foreach($carreras as $carrera)
+                        <option value="{{ $carrera->id }}" {{ old('carrera_id', $estudiante->carrera_id) == $carrera->id ? 'selected' : '' }}>
+                            {{ $carrera->nombre }}
+                        </option>
+                    @endforeach
+                </select>
+                @error('carrera_id') <span class="text-red-500 text-xs">{{ $message }}</span> @enderror
+            </div>
 
-        <button type="submit" class="btn btn-success">Actualizar</button>
-    </form>
+            <button type="submit" class="bg-green-500 hover:bg-green-600 text-white px-6 py-2 rounded">Actualizar</button>
+        </form>
+    </div>
 @endsection

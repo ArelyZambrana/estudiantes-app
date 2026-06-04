@@ -1,42 +1,30 @@
 @extends('layouts.app')
 
-@section('title', 'Lista de Carreras')
+@section('title', 'Nueva Carrera')
 
 @section('content')
-    <div class="d-flex justify-content-between align-items-center mb-3">
-        <h1>Lista de Carreras</h1>
-        <a href="{{ route('carreras.create') }}" class="btn btn-success">+ Nueva Carrera</a>
+    <div class="flex justify-between items-center mb-6">
+        <h1 class="text-2xl font-bold text-gray-800">Nueva Carrera</h1>
+        <a href="{{ route('carreras.index') }}" class="bg-gray-500 hover:bg-gray-600 text-white px-4 py-2 rounded">← Volver</a>
     </div>
 
-    @if(session('success'))
-        <div class="alert alert-success">{{ session('success') }}</div>
-    @endif
+    <div class="bg-white rounded shadow p-6 max-w-lg">
+        <form action="{{ route('carreras.store') }}" method="POST">
+            @csrf
 
-    <table class="table table-bordered table-striped">
-        <thead class="table-dark">
-            <tr>
-                <th>ID</th>
-                <th>Nombre</th>
-                <th>Facultad</th>
-                <th>Acciones</th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach($carreras as $carrera)
-            <tr>
-                <td>{{ $carrera->id }}</td>
-                <td>{{ $carrera->nombre }}</td>
-                <td>{{ $carrera->facultad }}</td>
-                <td>
-                    <a href="{{ route('carreras.edit', $carrera) }}" class="btn btn-sm btn-warning">Editar</a>
-                    <form action="{{ route('carreras.destroy', $carrera) }}" method="POST" style="display:inline">
-                        @csrf
-                        @method('DELETE')
-                        <button class="btn btn-sm btn-danger" onclick="return confirm('¿Eliminar?')">Eliminar</button>
-                    </form>
-                </td>
-            </tr>
-            @endforeach
-        </tbody>
-    </table>
+            <div class="mb-4">
+                <label class="block text-sm font-medium text-gray-700 mb-1">Nombre:</label>
+                <input type="text" name="nombre" value="{{ old('nombre') }}" class="w-full border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-400">
+                @error('nombre') <span class="text-red-500 text-xs">{{ $message }}</span> @enderror
+            </div>
+
+            <div class="mb-4">
+                <label class="block text-sm font-medium text-gray-700 mb-1">Facultad:</label>
+                <input type="text" name="facultad" value="{{ old('facultad') }}" class="w-full border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-400">
+                @error('facultad') <span class="text-red-500 text-xs">{{ $message }}</span> @enderror
+            </div>
+
+            <button type="submit" class="bg-green-500 hover:bg-green-600 text-white px-6 py-2 rounded">Guardar</button>
+        </form>
+    </div>
 @endsection
