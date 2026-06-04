@@ -4,21 +4,34 @@ namespace App\Http\Controllers;
 
 use App\Models\Estudiante;
 use App\Models\Carrera;
+use App\Models\Scopes\EstudianteActivoScope;
 use Illuminate\Http\Request;
 
 class EstudianteController extends Controller
 {
-    // Muestra la lista de estudiantes con su carrera relacionada
-    public function index()
+    // Muestra la lista de estudiantes con búsqueda y paginación
+    public function index(Request $request)
     {
-        $estudiantes = Estudiante::with('carrera')->get();
+        $estudiantes = Estudiante::with('carrera')
+            ->when($request->buscar, function ($query, $buscar) {
+                $query->where('nombre', 'like', "%{$buscar}%")
+                      ->orWhere('apellido', 'like', "%{$buscar}%");
+            })
+            ->paginate(5);
+
         return view('estudiantes.index', compact('estudiantes'));
+    }
+
+    // Muestra el detalle de un estudiante individual
+    public function show(Estudiante $estudiante)
+    {
+        return view('estudiantes.show', compact('estudiante'));
     }
 
     // Muestra el formulario para crear
     public function create()
     {
-        $carreras = Carrera::all(); // Necesitamos las carreras para el select
+        $carreras = Carrera::all();
         return view('estudiantes.create', compact('carreras'));
     }
 

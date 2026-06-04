@@ -13,7 +13,11 @@ class CarreraController extends Controller
         $carreras = Carrera::all();
         return view('carreras.index', compact('carreras'));
     }
-
+    // Muestra el detalle de una carrera individual
+    public function show(Carrera $carrera)
+    {
+        return view('carreras.show', compact('carrera'));
+    }
     // Muestra el formulario para crear
     public function create()
     {

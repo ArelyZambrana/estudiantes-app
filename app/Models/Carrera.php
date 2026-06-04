@@ -6,12 +6,17 @@ use Illuminate\Database\Eloquent\Model;
 
 class Carrera extends Model
 {
-    // Campos que se pueden llenar masivamente
     protected $fillable = ['nombre', 'facultad'];
 
     // Una carrera tiene muchos estudiantes
     public function estudiantes()
     {
         return $this->hasMany(Estudiante::class);
+    }
+
+    // Una carrera tiene muchas materias
+    public function materias()
+    {
+        return $this->hasMany(Materia::class);
     }
 }

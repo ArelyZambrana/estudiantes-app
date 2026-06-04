@@ -1,5 +1,5 @@
 <?php
-
+use App\Http\Controllers\MateriaController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\CarreraController;
 use App\Http\Controllers\EstudianteController;
@@ -17,5 +17,5 @@ Route::middleware(['App\Http\Middleware\RegistrarAuditoria'])->group(function ()
 
     // Rutas CRUD para Estudiantes
     Route::resource('estudiantes', EstudianteController::class);
-
+    Route::resource('materias', MateriaController::class);
 });
