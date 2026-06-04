@@ -4,28 +4,30 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>@yield('title', 'Mi App') — Sistema de Estudiantes</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     @vite(['resources/css/app.css', 'resources/js/app.js'])
+    <style>
+        * { font-family: 'Poppins', sans-serif; }
+        body { background: linear-gradient(135deg, #0f2027, #1a3a3a, #0d4f4f); min-height: 100vh; }
+    </style>
 </head>
-<body class="bg-gray-100 min-h-screen">
+<body>
 
-    {{-- NAVBAR --}}
-    <nav class="bg-gray-800 text-white px-6 py-4 flex justify-between items-center">
-        <div class="flex gap-6">
-            <a href="{{ route('materias.index') }}" class="hover:text-blue-300 font-semibold">📚 Materias</a>
-            <a href="{{ route('carreras.index') }}" class="hover:text-blue-300 font-semibold">🎓 Carreras</a>
-            <a href="{{ route('estudiantes.index') }}" class="hover:text-blue-300 font-semibold">👩‍🎓 Estudiantes</a>
+    <nav style="background: rgba(0,0,0,0.7); backdrop-filter: blur(10px);" class="px-8 py-4 flex justify-between items-center shadow-lg border-b border-emerald-500">
+        <div class="flex gap-8">
+            <a href="{{ route('carreras.index') }}" class="text-emerald-300 hover:text-white font-medium transition-colors">Carreras</a>
+            <a href="{{ route('estudiantes.index') }}" class="text-emerald-300 hover:text-white font-medium transition-colors">Estudiantes</a>
+            <a href="{{ route('materias.index') }}" class="text-emerald-300 hover:text-white font-medium transition-colors">Materias</a>
         </div>
-        <span class="text-gray-300 text-sm">Sistema de Estudiantes</span>
+        <span class="text-white font-semibold text-sm tracking-widest">SISTEMA DE ESTUDIANTES</span>
     </nav>
 
-    {{-- CONTENIDO --}}
     <main class="max-w-5xl mx-auto px-4 py-8">
         @yield('content')
     </main>
 
-    {{-- FOOTER --}}
-    <footer class="bg-gray-800 text-white text-center py-4 mt-10">
-        <p class="text-sm">Sistema de Gestión de Estudiantes 2026 — Laravel 11</p>
+    <footer style="background: rgba(0,0,0,0.7);" class="text-center py-4 mt-10 border-t border-emerald-500">
+        <p class="text-sm text-emerald-300">Sistema de Gestión de Estudiantes 2026 — Laravel 11</p>
     </footer>
 
     @yield('scripts')
