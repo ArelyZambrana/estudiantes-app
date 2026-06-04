@@ -4,18 +4,23 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Models\Estudiante;
-use App\Models\Scopes\EstudianteActivoScope;
 use Illuminate\Http\Request;
 
 class EstudianteApiController extends Controller
 {
     /**
-     * Retorna todos los estudiantes en formato JSON.
-     * A diferencia del controlador Blade, este no devuelve vistas sino JSON.
+     * Retorna estudiantes en JSON con búsqueda y paginación.
+     * Acepta ?search= para filtrar y ?page= para paginar.
      */
-    public function index()
+    public function index(Request $request)
     {
-        $estudiantes = Estudiante::with('carrera')->get();
+        $estudiantes = Estudiante::with('carrera')
+            ->when($request->search, function ($query, $search) {
+                $query->where('nombre', 'like', "%{$search}%")
+                      ->orWhere('apellido', 'like', "%{$search}%");
+            })
+            ->paginate(5);
+
         return response()->json($estudiantes);
     }
 

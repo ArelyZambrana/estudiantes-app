@@ -19,6 +19,12 @@ class MateriaController extends Controller
         return view('materias.index', compact('materias'));
     }
 
+    // Muestra el detalle de una materia individual
+    public function show(Materia $materia)
+    {
+        return view('materias.show', compact('materia'));
+    }
+
     public function create()
     {
         $carreras = Carrera::all();

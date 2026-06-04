@@ -29,6 +29,7 @@
                     <td class="px-4 py-3">{{ $carrera->nombre }}</td>
                     <td class="px-4 py-3">{{ $carrera->facultad }}</td>
                     <td class="px-4 py-3 flex gap-2">
+                        <a href="{{ route('carreras.show', $carrera) }}" class="bg-blue-600 hover:bg-blue-500 text-white px-3 py-1 rounded text-xs">Ver</a>
                         <a href="{{ route('carreras.edit', $carrera) }}" class="bg-emerald-600 hover:bg-emerald-500 text-white px-3 py-1 rounded text-xs">Editar</a>
                         <form action="{{ route('carreras.destroy', $carrera) }}" method="POST">
                             @csrf

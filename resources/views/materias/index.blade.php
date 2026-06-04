@@ -39,6 +39,7 @@
                     <td class="px-4 py-3">{{ $materia->semestre }}</td>
                     <td class="px-4 py-3">{{ $materia->carrera->nombre }}</td>
                     <td class="px-4 py-3 flex gap-2">
+                        <a href="{{ route('materias.show', $materia) }}" class="bg-blue-600 hover:bg-blue-500 text-white px-3 py-1 rounded text-xs">Ver</a>
                         <a href="{{ route('materias.edit', $materia) }}" class="bg-emerald-600 hover:bg-emerald-500 text-white px-3 py-1 rounded text-xs">Editar</a>
                         <form action="{{ route('materias.destroy', $materia) }}" method="POST">
                             @csrf

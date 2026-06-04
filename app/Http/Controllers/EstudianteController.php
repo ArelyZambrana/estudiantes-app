@@ -14,19 +14,24 @@ class EstudianteController extends Controller
     {
         $estudiantes = Estudiante::with('carrera')
             ->when($request->buscar, function ($query, $buscar) {
-                // Filtra por nombre o apellido usando LIKE
-             $query->where('nombre', 'like', "%{$buscar}%")
+                $query->where('nombre', 'like', "%{$buscar}%")
                       ->orWhere('apellido', 'like', "%{$buscar}%");
-          })
-         ->paginate(5); // Muestra 5 por página
+            })
+            ->paginate(5);
 
         return view('estudiantes.index', compact('estudiantes'));
+    }
+
+    // Muestra el detalle de un estudiante individual
+    public function show(Estudiante $estudiante)
+    {
+        return view('estudiantes.show', compact('estudiante'));
     }
 
     // Muestra el formulario para crear
     public function create()
     {
-        $carreras = Carrera::all(); // Necesitamos las carreras para el select
+        $carreras = Carrera::all();
         return view('estudiantes.create', compact('carreras'));
     }
 
